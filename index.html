@@ -132,20 +132,24 @@
             const chatId = 'YOUR_CHAT_ID';  // Replace with your Telegram Chat ID
 
             // Get the user's IP address using the Ipify API
-            const response = await fetch('https://api.ipify.org?format=json');
-            const data = await response.json();
-            const userIp = data.ip;
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const userIp = data.ip;
 
-            const message = `A user with IP address ${userIp} has entered the website!`;
+                const message = `A user with IP address ${userIp} has entered the website!`;
 
-            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                }),
-            });
+                await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                    }),
+                });
+            } catch (error) {
+                console.error('Error fetching IP or sending message:', error);
+            }
         }
 
         // Call the function when the page is loaded
